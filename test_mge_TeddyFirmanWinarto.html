@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test MGE - Teddy Firman Winarto</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+      .highlight {
+        font-weight: bold; /* buat bold */
+        color: black; /* warna huruf yang diketik */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center">Teddy Firman Winarto Search</h2>
+
+      <!-- Search Box -->
+      <div class="input-group mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="searchBox"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="searchButton"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- List data -->
+      <ul id="itemList" class="list-group">
+        <!-- data akan tampil -->
+      </ul>
+    </div>
+
+    <script>
+      const data = [
+        "Tan Muatan",
+        "Muatan",
+        "Pertanian",
+        "Hutan",
+        "Dragonball",
+        "Gonzales",
+        "Ali yaqin",
+        "Ghozali",
+      ];
+
+      function displayItems(filteredData) {
+        const listContainer = $("#itemList");
+        listContainer.empty();
+
+        filteredData.forEach((item) => {
+          const listItem = $('<li class="list-group-item"></li>');
+          listItem.html(highlightText(item, $("#searchBox").val()));
+          listContainer.append(listItem);
+        });
+      }
+
+      function highlightText(text, searchTerm) {
+        if (!searchTerm) return text;
+
+        const regex = new RegExp(`(${searchTerm})`, "gi");
+        return text.replace(regex, '<span class="highlight">$1</span>');
+      }
+
+      displayItems(data);
+
+      $("#searchBox").on("input", function () {
+        const searchTerm = $(this).val().trim();
+        const filteredData = data.filter((item) =>
+          item.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        displayItems(filteredData);
+      });
+    </script>
+  </body>
+</html>
